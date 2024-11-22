@@ -50,9 +50,9 @@ Ensure you have the following installed:
 
 - [Docker](https://www.docker.com/get-started) (Version 20.10 or higher)
 - [Docker Compose](https://docs.docker.com/compose/) (Version 2.x or higher)
-- [auth_service](https://github.com/joaoguiIherme/Auth-Microservice)
-- [notifications_service](https://github.com/joaoguiIherme/Notifications-Microservice)
-- [scraping_service](https://github.com/joaoguiIherme/Scraping-Microservice)
+- [auth_service](https://github.com/joaoguiIherme/auth_service)
+- [notifications_service](https://github.com/joaoguiIherme/notifications_service)
+- [scraping_service](https://github.com/joaoguiIherme/scraping_service)
 ---
 
 ## Installation
@@ -76,7 +76,7 @@ Move the `docker-compose.yml` file from the `main_app` directory to the root dir
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/joaoguiIherme/Main-Tasks-App.git
+   git clone https://github.com/joaoguiIherme/main_app.git
    cd Main-Tasks-App
    ```
 
