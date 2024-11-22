@@ -1,0 +1,106 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: main_app_development
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+
+  auth_service:
+    build:
+      context: ./auth_service
+    container_name: auth_service
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - app_network
+    volumes:
+      - ./auth_service:/app
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/auth_service_development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 10s
+      retries: 3
+
+  main_app:
+    build:
+      context: ./main_app
+    container_name: main_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - auth_service
+    networks:
+      - app_network
+    volumes:
+      - ./main_app:/app
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/main_app_development
+      RAILS_ENV: development
+    stdin_open: true
+    tty: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      retries: 3
+
+  notifications_service:
+    build:
+      context: ./notifications_service
+    container_name: notifications_service
+    ports:
+      - "4001:4001"
+    depends_on:
+      - db
+    networks:
+      - app_network
+    volumes:
+      - ./notifications_service:/app
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/notifications_service_development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4001"]
+      interval: 10s
+      retries: 3
+
+  scraping_service:
+    build:
+      context: ./scraping_service
+    container_name: scraping_service
+    ports:
+      - "4002:4002"
+    depends_on:
+      - db
+    networks:
+      - app_network
+    volumes:
+      - ./scraping_service:/app
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/scraping_service_development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4002"]
+      interval: 10s
+      retries: 3
+
+networks:
+  app_network:
+    name: app_network
+    driver: bridge
+
+volumes:
+  db_data:
