@@ -1,0 +1,18 @@
+<h1>Task Dashboard</h1>
+<div class="actions">
+  <%= link_to "Notifications", notifications_path, class: "button" %>
+  <%= link_to "Logout", logout_path, method: :delete, class: "button" %>
+</div>
+
+<div class="task-board">
+  <% @tasks.each do |status, tasks| %>
+    <div class="task-column">
+      <h3><%= status.titleize %></h3>
+      <ul>
+        <% tasks.each do |task| %>
+          <li><%= task.title %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

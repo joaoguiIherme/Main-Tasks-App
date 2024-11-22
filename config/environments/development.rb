@@ -59,6 +59,11 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  config.hosts << "auth_service"
+  config.hosts << "main_app"
+  config.hosts << "scraping_service"
+  config.hosts << "notifications_service"
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

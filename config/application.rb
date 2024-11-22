@@ -1,22 +1,22 @@
 require_relative "boot"
+require_relative "../app/middleware/jwt_authentication"
 
 require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module MainApp
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
+    # Configuração padrão do Rails
     config.load_defaults 7.0
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # Middleware personalizado
+    config.middleware.use JwtAuthentication
+
+    # Configuração dos hosts permitidos
+    config.hosts << "auth_service"
+    config.hosts << "main_app"
+    config.hosts << "scraping_service"
+    config.hosts << "notifications_service"
   end
 end

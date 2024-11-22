@@ -1,0 +1,10 @@
+<h1>Notifications</h1>
+<ul>
+  <% @notifications.each do |notification| %>
+    <li>
+      <strong><%= notification["title"] %>:</strong>
+      <%= notification["message"] %>
+    </li>
+  <% end %>
+</ul>
+<%= link_to "Back to Dashboard", tasks_path, class: "button" %>

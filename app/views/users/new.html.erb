@@ -1,0 +1,33 @@
+<h1>Registrar</h1>
+
+<% if flash[:alert] %>
+  <div class="alert">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<%= form_with url: users_path, method: :post do |f| %>
+  <div>
+    <%= label_tag :name, "Nome" %>
+    <%= text_field_tag :name %>
+  </div>
+  <div>
+    <%= label_tag :email, "Email" %>
+    <%= email_field_tag :email %>
+  </div>
+  <div>
+    <%= label_tag :password, "Senha" %>
+    <%= password_field_tag :password %>
+  </div>
+  <div>
+    <%= label_tag :password_confirmation, "Confirme a senha" %>
+    <%= password_field_tag :password_confirmation %>
+  </div>
+  <div>
+    <%= submit_tag "Registrar" %>
+  </div>
+<% end %>
+
+<p>
+  Já tem uma conta? <%= link_to "Login", "/login" %>
+</p>

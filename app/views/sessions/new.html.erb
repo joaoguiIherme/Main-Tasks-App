@@ -1,0 +1,25 @@
+<h1>Login</h1>
+
+<% if flash[:alert] %>
+  <div class="alert">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<%= form_with url: login_path, method: :post do |f| %>
+  <div>
+    <%= label_tag :email %>
+    <%= email_field_tag :email %>
+  </div>
+  <div>
+    <%= label_tag :password %>
+    <%= password_field_tag :password %>
+  </div>
+  <div>
+    <%= submit_tag "Login" %>
+  </div>
+<% end %>
+
+<p>
+  Não tem uma conta? <%= link_to "Registrar", "/register" %>
+</p>
