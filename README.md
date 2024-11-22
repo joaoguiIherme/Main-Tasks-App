@@ -77,7 +77,6 @@ Move the `docker-compose.yml` file from the `main_app` directory to the root dir
 1. Clone the repository:
    ```bash
    git clone https://github.com/joaoguiIherme/main_app.git
-   cd Main-Tasks-App
    ```
 
 2. Ensure the `docker-compose.yml` file is in the root directory as described above.
