@@ -1,5 +1,3 @@
-Here is the updated README to include the instructions for relocating the `docker-compose.yml` file as specified:
-
 ---
 
 # Main Tasks App
