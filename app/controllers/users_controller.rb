@@ -1,29 +1,38 @@
 class UsersController < ApplicationController
-  # skip_before_action :authenticate_request, only: %i[new create]
+  skip_before_action :authenticate_request, only: %i[new create]
+
   def new
-    @user = User.new
+    # Render registration form
   end
 
   def create
-    response = HTTP.post("http://auth_service:4000/auth/register", json: user_params)
+    response = RestClient.post(
+      "http://auth_service:4000/auth/register",
+      user_params.to_json,
+      { content_type: :json, accept: :json }
+    )
 
-    if response.status.success?
-      flash[:notice] = 'Usuário registrado com sucesso! Faça login para continuar.'
+    if response.code == 201
+      flash[:notice] = 'User registered successfully! Please log in.'
       redirect_to login_path
     else
-      @errors = JSON.parse(response.body.to_s)["errors"]
-      flash[:alert] = @errors.join(', ')
-      render :new
+      @errors = JSON.parse(response.body)['errors']
+      flash.now[:alert] = @errors.join(', ')
+      render :new, status: :unprocessable_entity
     end
-  rescue HTTP::ConnectionError => e
-    Rails.logger.error "Erro ao conectar com auth_service: #{e.message}"
-    flash[:alert] = 'Erro ao conectar ao serviço de autenticação. Tente novamente mais tarde.'
-    render :new
+  rescue RestClient::ExceptionWithResponse => e
+    Rails.logger.error "Error connecting to auth_service: #{e.message}"
+    flash.now[:alert] = 'Error connecting to the authentication service. Please try again later.'
+    render :new, status: :service_unavailable
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    if params[:user]
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    else
+      params.permit(:name, :email, :password, :password_confirmation)
+    end
   end
 end

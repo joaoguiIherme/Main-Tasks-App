@@ -1,6 +1,5 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  # skip_before_action :verify_authenticity_token, only: :update_status # Para permitir requisições externas
 
   # GET /tasks
   def index

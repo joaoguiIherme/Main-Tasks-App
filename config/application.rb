@@ -1,5 +1,4 @@
 require_relative "boot"
-require_relative "../app/middleware/jwt_authentication"
 
 require "rails/all"
 
@@ -9,9 +8,6 @@ module MainApp
   class Application < Rails::Application
     # Configuração padrão do Rails
     config.load_defaults 7.0
-
-    # Middleware personalizado
-    config.middleware.use JwtAuthentication
 
     # Configuração dos hosts permitidos
     config.hosts << "auth_service"

@@ -1,45 +1,35 @@
-# app/controllers/sessions_controller.rb
 class SessionsController < ApplicationController
-  # skip_before_action :authenticate_request, only: %i[new create]
+  skip_before_action :authenticate_request, only: %i[new create]
 
   def new
-    # Renderiza a página de login
+    # Render login form
   end
 
   def create
-    Rails.logger.info "Iniciando login para o email: #{params[:email]}"
-    response = HTTP.post("http://auth_service:4000/auth/login", json: { email: params[:email], password: params[:password] })
-  
-    if response.status.success?
-      token_data = JSON.parse(response.body.to_s)
-      if token_data["token"].present?
-        session[:jwt] = token_data["token"]
-        Rails.logger.info "Login bem-sucedido para o email: #{params[:email]}"
-        redirect_to root_path, notice: 'Login realizado com sucesso!'
+    begin
+      response = RestClient.post(
+        "http://auth_service:4000/auth/login",
+        { email: params[:email], password: params[:password] }.to_json,
+        { content_type: :json, accept: :json }
+      )
+
+      if response.code == 200
+        token_data = JSON.parse(response.body)
+        session[:jwt] = token_data['token'] # Armazenar token na sessão
+        redirect_to root_path, notice: 'Login successful!'
       else
-        Rails.logger.error "Token inválido recebido: #{token_data}"
-        flash[:alert] = 'Erro no serviço de autenticação. Tente novamente mais tarde.'
+        flash.now[:alert] = 'Invalid email or password.'
         render :new
       end
-    else
-      Rails.logger.error "Falha no login para o email: #{params[:email]}. Resposta: #{response.body.to_s}"
-      flash[:alert] = 'Email ou senha inválidos.'
+    rescue RestClient::ExceptionWithResponse => e
+      Rails.logger.error "Error connecting to auth_service: #{e.message}"
+      flash.now[:alert] = 'Error connecting to the authentication service. Please try again later.'
       render :new
     end
-  rescue HTTP::ConnectionError => e
-    Rails.logger.error "Erro ao conectar com auth_service: #{e.message}"
-    flash[:alert] = 'Erro ao conectar ao serviço de autenticação. Tente novamente mais tarde.'
-    render :new
   end
 
   def destroy
     session[:jwt] = nil
-    redirect_to login_path, notice: 'Logout realizado com sucesso.'
-  end
-
-  private
-
-  def login_params
-    params.permit(:email, :password)
+    redirect_to login_path, notice: 'Logged out successfully.'
   end
 end

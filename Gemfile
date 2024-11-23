@@ -12,6 +12,7 @@ gem "jwt"
 gem "http"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
+gem 'sass-rails', '~> 5.0'
 gem "sprockets-rails"
 gem 'rest-client'
 
