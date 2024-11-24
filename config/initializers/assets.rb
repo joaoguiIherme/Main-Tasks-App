@@ -15,3 +15,4 @@ Rails.application.config.assets.paths << Rails.root.join("app", "assets", "build
 
 # Precompile additional assets.
 Rails.application.config.assets.precompile += %w[application.js]
+Rails.application.config.assets.precompile += %w[application.css auth.scss]

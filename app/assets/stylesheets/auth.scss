@@ -1,0 +1,99 @@
+/* Form Container */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #6b0fbc !important; /* Fundo roxo do modelo */
+}
+  
+/* Form Content */
+.form-content {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px; /* Ajusta a borda para ser arredondada */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important;
+    width: 100%;
+    max-width: 400px; /* Ajusta para o tamanho do modelo */
+    text-align: center;
+}
+
+/* Título */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333333; /* Texto escuro para contraste */
+}
+
+/* Subtítulo (opcional) */
+h2 {
+    font-size: 14px;
+    margin-bottom: 30px;
+    color: #666666 !important;
+}
+
+/* Estilos do Formulário */
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333333 !important;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd !important;
+    border-radius: 5px;
+}
+
+.form-input:focus {
+    border-color: #6b0fbc !important; /* Cor roxa ao focar */
+    outline: none;
+}
+
+/* Botão de Enviar */
+.form-button {
+    background-color: #e91e63 !important; /* Cor rosa do modelo */
+    color: #ffffff;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.form-button:hover {
+    background-color: #d81b60 !important; /* Tom mais escuro ao passar o mouse */
+}
+
+/* Links de Rodapé */
+.form-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #000000 !important; /* Branco para contraste com o fundo */
+    text-decoration: none;
+}
+
+.form-footer a {
+    color: #e91e63 !important; /* Rosa para destaque */
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+  
